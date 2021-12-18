@@ -2,6 +2,7 @@
 
 #include "hooks.h"
 #include "Util.h"
+#include <ctime.h>
 
 DWORD g_dwProcessId = 0;
 //DWORD g_dwRegionSize = 0;
@@ -138,8 +139,15 @@ NTSTATUS NTAPI HookedNtWriteVirtualMemory(HANDLE ProcessHandle, PVOID BaseAddres
 				}
 
 				Util::Log<Util::DebugType::INFO>("DOS magic and PE signature detected! Dumping buffer at [" + std::to_string((DWORD)Buffer) + "] (size: [" + std::to_string(dwPeSize) + "])...\n");
-
-				dumpPe("NtWriteVirtualMemory_dump.bin", Buffer, dwPeSize);
+				// should add date to filename so old dumps won't be overwritten
+			         time_t rawtime;
+  				 struct tm * timeinfo;
+ 				 char szName[100];
+				 time (&rawtime);
+				 timeinfo = localtime(&rawtime);
+ 				 strftime(szName,sizeof(szName),"%d-%m-%Y %H:%M:%S",timeinfo);
+				 strcat(szName, "NtWriteVirtualMemory_dump.bin");
+				dumpPe(szName, Buffer, dwPeSize);
 			}
 		}
 
