@@ -33,7 +33,7 @@ static bool memoryMapPayload(const LPVOID lpDest, const LPVOID lpPayload, const 
 }
 
 /*
-* Walk the import table and fix the addresses
+* Walk the import table
 */
 static bool checkImportTable(const LPVOID lpBaseAddress, const PIMAGE_NT_HEADERS pinh, std::map<std::string, bool>& imports) {
 	bool ret = false;
