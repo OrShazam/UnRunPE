@@ -139,7 +139,7 @@ void initialiseHooks() {
 	if (hThread)
 		::ResumeThread(hThread);
 	else
-		Util::FatalLog("Failed to resume thread\n");
+		Util::FatalLog("Failed to open thread\n");
 }
 
 void virtualToRaw(std::vector<BYTE>& out, const std::vector<BYTE>& in) {
