@@ -55,7 +55,9 @@ NTSTATUS NTAPI HookedNtUnmapViewOfSection(HANDLE ProcessHandle, PVOID BaseAddres
 	// unhook to call function
 	Util::Memory::UnhookFunction((DWORD)fNtUnmapViewOfSection, g_originalBytes.find("NtUnmapViewOfSection")->second);
 	// free original bytes after use
-	delete g_originalBytes.find("NtUnmapViewOfSection")->second;
+	HeapFree(
+		GetProcessHeap(),
+		g_originalBytes.find("NtUnmapViewOfSection")->second);
 
 	// call function for process and thread handles
 	NTSTATUS ret = fNtUnmapViewOfSection(ProcessHandle, BaseAddress);
@@ -157,7 +159,9 @@ NTSTATUS NTAPI HookedNtWriteVirtualMemory(HANDLE ProcessHandle, PVOID BaseAddres
 	// unhook to call function
 	Util::Memory::UnhookFunction((DWORD)fNtWriteVirtualMemory, g_originalBytes.find("NtWriteVirtualMemory")->second);
 	// free original bytes after use
-	delete g_originalBytes.find("NtWriteVirtualMemory")->second;
+	HeapFree(
+		GetProcessHeap(),
+		g_originalBytes.find("NtWriteVirtualMemory")->second);
 
 	// call function for process and thread handles
 	NTSTATUS ret = fNtWriteVirtualMemory(ProcessHandle, BaseAddress, Buffer, NumberOfBytesToWrite, NumberOfBytesWritten);
@@ -179,7 +183,9 @@ NTSTATUS NTAPI HookedNtGetContextThread(HANDLE ThreadHandle, PCONTEXT Context) {
 	// unhook to call function
 	Util::Memory::UnhookFunction((DWORD)fNtGetContextThread, g_originalBytes.find("NtGetContextThread")->second);
 	// free original bytes after use
-	delete g_originalBytes.find("NtGetContextThread")->second;
+	HeapFree(
+		GetProcessHeap(),
+		g_originalBytes.find("NtGetContextThread")->second);
 
 	// call function for process and thread handles
 	NTSTATUS ret = fNtGetContextThread(ThreadHandle, Context);
@@ -201,7 +207,9 @@ NTSTATUS NTAPI HookedNtSetContextThread(HANDLE ThreadHandle, PCONTEXT Context) {
 	// unhook to call function
 	Util::Memory::UnhookFunction((DWORD)fNtSetContextThread, g_originalBytes.find("NtSetContextThread")->second);
 	// free original bytes after use
-	delete g_originalBytes.find("NtSetContextThread")->second;
+	HeapFree(
+		GetProcessHeap(),
+		g_originalBytes.find("NtSetContextThread")->second);
 
 	// call function for process and thread handles
 	NTSTATUS ret = fNtSetContextThread(ThreadHandle, Context);
@@ -264,7 +272,9 @@ NTSTATUS NTAPI HookedNtResumeThread(HANDLE ThreadHandle, PULONG SuspendCount) {
 	// unhook to call function
 	Util::Memory::UnhookFunction((DWORD)fNtResumeThread, g_originalBytes.find("NtResumeThread")->second);
 	// free original bytes after use
-	delete g_originalBytes.find("NtResumeThread")->second;
+	HeapFree(
+		GetProcessHeap(),
+		g_originalBytes.find("NtResumeThread")->second);
 
 	// call function for process and thread handles
 	NTSTATUS ret = fNtResumeThread(ThreadHandle, SuspendCount);
