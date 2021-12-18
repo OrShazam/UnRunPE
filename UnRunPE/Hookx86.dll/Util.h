@@ -309,7 +309,10 @@ namespace Util {
 			 */
 			static LPBYTE HookFunction(DWORD dwFuncAddress, DWORD dwNewAddress) {
 				// save original bytes
-				LPBYTE origBytes = new BYTE[6];
+				LPBYTE origBytes = (LPBYTE)HeapAlloc(
+					GetProcessHeap(),
+					HEAP_ZERO_MEMORY,
+					6);
 				for (int i = 0; i < 6; i++)
 					origBytes[i] = ReadMemory<BYTE>((LPVOID)(dwFuncAddress + i));
 
