@@ -18,7 +18,9 @@ NTSTATUS NTAPI HookedNtCreateUserProcess(PHANDLE ProcessHandle, PHANDLE ThreadHa
 	// unhook to call function
 	Util::Memory::UnhookFunction((DWORD)fNtCreateUserProcess, g_originalBytes.find("NtCreateUserProcess")->second);
 	// free original bytes after use
-	delete g_originalBytes.find("NtCreateUserProcess")->second;
+	HeapFree(
+		GetProcessHeap(),
+		g_originalBytes.find("NtCreateUserProcess")->second);
 
 	// call function for process and thread handles
 	NTSTATUS ret = ::fNtCreateUserProcess(ProcessHandle, ThreadHandle, ProcessDesiredAccess, ThreadDesiredAccess, ProcessObjectAttributes, ThreadObjectAttributes, ProcessFlags, ThreadFlags, ProcessParameters, CreateInfo, AttributeList);
